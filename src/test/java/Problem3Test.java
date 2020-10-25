@@ -11,6 +11,36 @@ import static org.junit.Assert.*;
 // do not change any function here except main()
 public class Problem3Test {
 
+    // and you thought we never use main() in this class ;)
+    // this main function call printListInReverse to print on the screen
+    // use this main function for debugging, okay to change
+    public static void main(String[] args) {
+        int[][] inputs = {
+                {},
+                {1, 4, 2},
+                {3, 4, 5, 6, 7},
+        };
+        PrintStream toScreen = System.out;
+        for (int[] input : inputs) {
+            Problem3.printListInReverse(arrayToList(input), toScreen);
+            System.out.println();
+        }
+    }
+
+    private static ListNode arrayToList(int[] data) {
+        if (data == null) {
+            return null;
+        }
+        ListNode head = new ListNode();  // dummy node
+        ListNode ptr = head;
+        for (int datum : data) {
+            ptr.next = new ListNode(datum);
+            ptr = ptr.next;
+        }
+
+        return head;
+    }
+
     @Test
     public void testReversePrint() {
         int[][] inputs = {
@@ -38,29 +68,13 @@ public class Problem3Test {
 
             Problem3.printListInReverse(arrayToList(inputs[i]), ps);
 
-            String tmp = baos.toString().replace("\n", " ").trim();
+            String tmp = baos.toString().replace("\n", " ").replace("\r", "").trim();
             if (inputs[i].length != 0) {
                 int[] actual = Arrays.stream(tmp.split(" ")).mapToInt(Integer::parseInt).toArray();
                 assertArrayEquals(expected[i], actual);
             } else {
                 assertEquals(0, tmp.length());
             }
-        }
-    }
-
-    // and you thought we never use main() in this class ;)
-    // this main function call printListInReverse to print on the screen
-    // use this main function for debugging, okay to change
-    public static void main(String[] args) {
-        int[][] inputs = {
-                {},
-                {1, 4, 2},
-                {3, 4, 5, 6, 7},
-        };
-        PrintStream toScreen = System.out;
-        for (int[] input : inputs) {
-            Problem3.printListInReverse(arrayToList(input), toScreen);
-            System.out.println();
         }
     }
 
@@ -91,19 +105,5 @@ public class Problem3Test {
             }
             assertNull(caseId, ptr.next);
         }
-    }
-
-    private static ListNode arrayToList(int[] data) {
-        if (data == null) {
-            return null;
-        }
-        ListNode head = new ListNode();  // dummy node
-        ListNode ptr = head;
-        for (int datum : data) {
-            ptr.next = new ListNode(datum);
-            ptr = ptr.next;
-        }
-
-        return head;
     }
 }

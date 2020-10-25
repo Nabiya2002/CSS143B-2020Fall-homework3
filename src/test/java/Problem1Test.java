@@ -45,6 +45,7 @@ public class Problem1Test {
     @Test
     public void testValidParentheses() {
         String[] inputs = {
+                "{}",
                 "(}",
                 "{}()",
                 ")[](",
@@ -58,7 +59,7 @@ public class Problem1Test {
                 "[x",
                 null
         };
-        boolean[] expect = {false, true, false, true, true, true, false, true, false, false, false, true};
+        boolean[] expect = {true, false, true, false, true, true, true, false, true, false, false, false, true};
 
         for (int i = 0; i < inputs.length; i++) {
             boolean actual = isValid(inputs[i]);
@@ -120,5 +121,29 @@ public class Problem1Test {
             Integer actual = minStack.getMin();
             assertEquals(expect[i], actual);
         }
+    }
+
+    // Added my own test to test push, pop, and getMin
+    @Test
+    public void testMinStackPushAndPopCombination() {
+        MinStack minStack = new MinStack(10);
+        minStack.push(12);
+        minStack.push(13);
+
+        int n = minStack.pop();
+        assertEquals(n, 13);
+
+        minStack.push(14);
+        minStack.push(-11);
+        minStack.push(16);
+
+        n = minStack.getMin();
+        assertEquals(n, -11);
+
+        n = minStack.pop();
+        assertEquals(n, 16);
+
+        n = minStack.getMin();
+        assertEquals(n, -11);
     }
 }

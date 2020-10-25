@@ -1,9 +1,14 @@
+/**
+ * Author: Nabiya Alam
+ * Version: 1.0.0
+ * Date: 10/25/2020
+ */
 package Problem2;
 
 // all functions assume using dummy node
 public class SingleLinkedList {
     // do not add member variables
-    private ListNode head;
+    private final ListNode head;
     private int size;
 
     public SingleLinkedList() {
@@ -12,22 +17,17 @@ public class SingleLinkedList {
 
     // copy constructor
     public SingleLinkedList(SingleLinkedList list) {
-        // homework
-    }
+        this();
+        ListNode otherCurrent = list.head.next;
+        ListNode thisCurrent = head;
 
-    public int removeAll(int valueToRemove) {
-        // homework
-        // in-place
-        return -1; // place holder
+        while (otherCurrent != null) {
+            thisCurrent.next = new ListNode(otherCurrent.val);
+            otherCurrent = otherCurrent.next;
+            thisCurrent = thisCurrent.next;
+        }
+        size = list.size;
     }
-
-    // reverse the linked list nodes iteratively (no recursion)
-    public void reverse() {
-        // homework
-        // in-place
-    }
-
-    // do not change any function below
 
     public SingleLinkedList(int[] data) {
         this();
@@ -40,6 +40,49 @@ public class SingleLinkedList {
             ptr = ptr.next;
             size++;
         }
+    }
+
+    // goes through the list and removes any node that matches valueToRemove
+    public int removeAll(int valueToRemove) {
+        ListNode prev = head;
+        ListNode curr = head.next;
+
+        int removed = 0;
+
+        while (curr != null) {
+            if (curr.val == valueToRemove) {
+
+                prev.next = curr.next;
+                curr.next = null;
+                curr = prev.next;
+
+                removed++;
+
+                // also need to reduce the size when a node is removed
+                // to maintain correct count
+                size--;
+            } else {
+                prev = curr;
+                curr = curr.next;
+            }
+        }
+        return removed;
+    }
+
+// do not change any function below
+
+    // reverse the linked list nodes iteratively (no recursion)
+    public void reverse() {
+        ListNode prev = null;
+        ListNode current = head.next;
+
+        while (current != null) {
+            ListNode temp = current.next;
+            current.next = prev;
+            prev = current;
+            current = temp;
+        }
+        head.next = prev;
     }
 
     // Appends the specified element to the end of this list
